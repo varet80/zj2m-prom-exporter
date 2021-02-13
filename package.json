@@ -1,0 +1,14 @@
+{
+  "name": "zj2m_prometheus",
+  "version": "0.1.0",
+  "description": "A Prometheus exported for Zwavejs2mqtt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prom-client": "^13.0.0"
+  }
+}
