@@ -8,7 +8,6 @@ const DEFAULT_PROMETHEUS_METRICS_PATH = '/metrics';
 function PromClient (zwave) {
   if (!(this instanceof PromClient)) {
     logger.info('This is the PromClient init')
-    logger.info(`Zwave length is ${zwave.length()}`)
     this.zwave = zwave
     d = new PromClient()
     d.start()
