@@ -5,10 +5,9 @@ const logger = require('../../lib/logger.js').module('Prometheus')
 
 const DEFAULT_PROMETHEUS_METRICS_PATH = '/metrics';
 
-function PromClient (zwave) {
+function PromClient () {
   if (!(this instanceof PromClient)) {
     logger.info('This is the PromClient init')
-    this.zwave = zwave
     d = new PromClient()
     d.start()
   }
@@ -22,6 +21,8 @@ PromClient.prototype.start = async function () {
         this.zwave.on('valueChanged', onValueChanged.bind(this))
         this.zwave.on('nodeRemoved',  onNodeRemoved.bind(this))
     }
+    // this is async but doesn't need to be awaited
+    this.zwave.connect()
 }
 
 
