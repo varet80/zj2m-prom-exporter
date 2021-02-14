@@ -10,7 +10,8 @@ function PromClient (zwave) {
     logger.info('This is the PromClient init')
     logger.info(`Zwave length is ${zwave.length()}`)
     this.zwave = zwave
-    PromClient.start(zwave)
+    d = new PromClient()
+    d.start()
   }
   logger.info('Next step of PromClient')
 
