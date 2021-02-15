@@ -1,8 +1,8 @@
 const promClient = require('prom-client');
 
 const logger = require('../../lib/logger.js').module('Prometheus')
-// setup gauge
 
+// setup gauge
 const gauge = new promClient.Gauge({
   name: 'zj2m',
   help: 'zwavejs2mqtt gauges from metrics',
@@ -57,10 +57,10 @@ function onValueChanged (valueId, node, changed) {
     location: valueId.nodeLocation,
     commandClass: valueId.commandClass,
     property: valueId.propertyName,
-    propertyKey: valueId.propertyKey
+    propertyKey: valueId.propertyKey,
     label: valueId.label,
     type: valueId.type,
-    endpoint: valueId.endpoint
+    endpoint: valueId.endpoint,
     id: valueId.id
   }, metricValue)
 }
