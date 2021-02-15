@@ -1,24 +1,24 @@
+const promClient = require('prom-client');
 
 const logger = require('../../lib/logger.js').module('Prometheus')
-
-const promClient = require('prom-client');
-const registry = promClient.Registry;
-const DEFAULT_PROMETHEUS_METRICS_PATH = '/metrics';
-
 // setup gauge
-const gauge = new registry.Gauge({
+const promRegistry = promClient.Registry;
+
+const gauge = new promRegistry.Gauge({
   name: 'zj2m',
   help: 'zwavejs2mqtt gauges from metrics',
-  labelNames: ['location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id'],
+  labelNames: ['nodeId', 'location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id'],
 });
-function PromClient (zwave) {
-  this.zwave = zwave
+const DEFAULT_PROMETHEUS_METRICS_PATH = '/metrics';
+
+function PromClient (zw) {
   if (!(this instanceof PromClient)) {
     logger.info('This is the PromClient init')
-    d = new PromClient(zwave)
+    d = new PromClient()
     d.start()
   }
-  logger.info('Next step of PromClient')
+  logger.info('Next ste p of PromClient')
+
 }
 
 PromClient.prototype.start = async function () {
@@ -39,6 +39,31 @@ function onNodeRemoved (node) {
 
 function onValueChanged (valueId, node, changed) {
   logger.info(`Value is ${changed}`)
+  let metricValue = 0; 
+  switch (valueId.type) {
+    case "boolean":
+      if (valueId.value) {
+        metricValue = 1
+      }
+      break
+    case "number":
+      metricValue = valueId.value
+      break
+    default:
+      return
+  }
+  gauge.set({ 
+    nodeId: valueId.nodeId,
+    node: valueId.nodeName,
+    location: valueId.nodeLocation,
+    commandClass: valueId.commandClass,
+    property: valueId.propertyName,
+    propertyKey: valueId.propertyKey
+    label: valueId.label,
+    type: valueId.type,
+    endpoint: valueId.endpoint
+    id: valueId.id
+  }, metricValue)
 }
 
 module.exports = PromClient
