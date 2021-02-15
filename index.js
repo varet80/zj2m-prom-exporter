@@ -2,9 +2,8 @@ const promClient = require('prom-client');
 
 const logger = require('../../lib/logger.js').module('Prometheus')
 // setup gauge
-const promRegistry = promClient.Registry;
 
-const gauge = new promRegistry.Gauge({
+const gauge = new promClient.Gauge({
   name: 'zj2m',
   help: 'zwavejs2mqtt gauges from metrics',
   labelNames: ['nodeId', 'location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id'],
