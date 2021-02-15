@@ -1,18 +1,24 @@
-const promClient = require('prom-client');
-const Registry = promClient.Registry;
 
 const logger = require('../../lib/logger.js').module('Prometheus')
 
+const promClient = require('prom-client');
+const registry = promClient.Registry;
 const DEFAULT_PROMETHEUS_METRICS_PATH = '/metrics';
 
+// setup gauge
+const gauge = new registry.Gauge({
+  name: 'zj2m',
+  help: 'zwavejs2mqtt gauges from metrics',
+  labelNames: ['location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id'],
+});
 function PromClient (zwave) {
+  this.zwave = zwave
   if (!(this instanceof PromClient)) {
     logger.info('This is the PromClient init')
     d = new PromClient(zwave)
     d.start()
   }
   logger.info('Next step of PromClient')
-
 }
 
 PromClient.prototype.start = async function () {
