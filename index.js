@@ -11,9 +11,10 @@ const gauge = new promClient.Gauge({
 const DEFAULT_PROMETHEUS_METRICS_PATH = '/metrics';
 
 function PromClient (zw) {
+  this.zwave = zw
   if (!(this instanceof PromClient)) {
     logger.info('This is the PromClient init')
-    d = new PromClient()
+    d = new PromClient(zw)
     d.start()
   }
   logger.info('Next ste p of PromClient')
