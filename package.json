@@ -4,7 +4,15 @@
   "description": "A Prometheus exported for Zwavejs2mqtt",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npm-run-all lint:*",
+    "lint-fix": "npm-run-all lint-fix:*",
+    "lint:eslint": "eslint --ext .js,.vue .",
+    "lint-fix:eslint": "eslint --fix --ext .js,.vue .",
+    "lint:markdownlint": "markdownlint '**/*.md'",
+    "lint-fix:markdownlint": "markdownlint --fix '**/*.md'",
+    "lint:prettier": "prettier-standard --check",
+    "lint-fix:prettier": "prettier-standard --format"
   },
   "author": "",
   "repository": {
@@ -13,7 +21,27 @@
   },
   "license": "ISC",
   "dependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^5.0.0",
     "fastify": "^3.12.0",
     "prom-client": "^13.0.0"
+  },
+  "optionalDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^5.0.0"
   }
 }
