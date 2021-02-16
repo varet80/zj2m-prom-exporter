@@ -111,4 +111,4 @@ function onValueChanged (valueId) {
   gaugePayload(valueId)
 }
 
-module.exports = new PromClient
+module.exports = PromClient
