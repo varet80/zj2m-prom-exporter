@@ -1,15 +1,24 @@
+// https://eslint.org/docs/user-guide/configuring
+
 module.exports = {
+  root: true,
   env: {
     browser: true,
-    es2021: true
+    mocha: true,
+    node: true
   },
   extends: [
+    // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard'
   ],
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module'
-  },
+  // required to lint *.vue files
+  plugins: ['babel'],
+  // add your custom rules here
   rules: {
+    // allow async-await
+    'generator-star-spacing': 'off',
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-unused-vars': ['error', { vars: 'local' }]
   }
 }

@@ -24,7 +24,7 @@ const gauge = new promCli.Gauge({
 // Http Server to return metrics
 function HttpServer (customRegistry) {
   // Declare a route
-  fastify.get(httpMetricPath, async (request, reply) => {
+  fastify.get(httpMetricPath, async (request) => {
     logger.info(`Metrics query from ${request.ip}`)
     return customRegistry.metrics()
   })
@@ -113,13 +113,13 @@ function gaugePayload (payload) {
 
 // TODO: Placeholder for removal
 function onNodeRemoved (node) {
-
+  logger.debug(`Node data ${node}`)
 }
 
 /**
  * Value changes calls for change
  **/
-function onValueChanged (valueId, node, changed) {
+function onValueChanged (valueId) {
   logger.debug(`Value ${valueId.value} is typeof ${typeof valueId.value}`)
   gaugePayload(valueId)
 }
