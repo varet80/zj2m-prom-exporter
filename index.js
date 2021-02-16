@@ -14,7 +14,18 @@ const gauge = new promCli.Gauge({
   registers: [customRegistry],
   name: 'zj2m',
   help: 'zwavejs2mqtt gauges from metrics',
-  labelNames: ['nodeId', 'location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id']
+  labelNames: [
+    'nodeId',
+    'location',
+    'name',
+    'commandClass',
+    'property',
+    'propertyKey',
+    'label',
+    'type',
+    'endpoint',
+    'id'
+  ]
 })
 
 /**
