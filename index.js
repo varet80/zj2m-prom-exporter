@@ -1,11 +1,7 @@
 const promCli = require('prom-client')
+const { HttpServer } = require('./HttpServer')
 const logger = require('../../lib/logger.js').module('Prometheus')
-const fastify = require('fastify')()
-
-// Http Server settings
-const httpPort = 9001
-const httpAddr = '0.0.0.0'
-const httpMetricPath = '/metrics'
+exports.logger = logger
 
 let instance = null // the singleton instance
 
@@ -18,56 +14,49 @@ const gauge = new promCli.Gauge({
   registers: [customRegistry],
   name: 'zj2m',
   help: 'zwavejs2mqtt gauges from metrics',
-  labelNames: ['nodeId', 'location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id']
+  labelNames: [
+    'nodeId',
+    'location',
+    'name',
+    'commandClass',
+    'property',
+    'propertyKey',
+    'label',
+    'type',
+    'endpoint',
+    'id'
+  ]
 })
-
-// Http Server to return metrics
-function HttpServer (customRegistry) {
-  // Declare a route
-  fastify.get(httpMetricPath, async (request) => {
-    logger.info(`Metrics query from ${request.ip}`)
-    return customRegistry.metrics()
-  })
-
-  // Run the server!
-  const start = async () => {
-    try {
-      await fastify.listen(httpPort, httpAddr)
-    } catch (err) {
-      fastify.log.error(err)
-      process.exit(1)
-    }
-  }
-  start()
-}
 
 /**
  * Function to initiate the Client (plugin)
  **/
-function PromClient (zwave) {
-  if (instance) {
-    instance.destroy()
-  }
-  this.zwave = zwave
-  if (!(this instanceof PromClient)) {
-    // start http server
-    HttpServer(customRegistry)
+class PromClient {
+  constructor (zwave) {
+    if (instance) {
+      instance.destroy()
+    }
+    this.zwave = zwave
+    if (!(this instanceof PromClient)) {
+      // start http server
+      HttpServer(customRegistry)
 
-    const d = new PromClient(zwave)
-    d.start()
+      const d = new PromClient(zwave)
+      d.start()
+    }
+
+    instance = this
   }
 
-  instance = this
-}
-
-PromClient.prototype.start = async function () {
-  logger.info('Event caller')
-  if (this.zwave) {
-    this.zwave.on('valueChanged', onValueChanged.bind(this))
-    this.zwave.on('nodeRemoved', onNodeRemoved.bind(this))
+  async start () {
+    logger.info('Event caller')
+    if (this.zwave) {
+      this.zwave.on('valueChanged', onValueChanged.bind(this))
+      this.zwave.on('nodeRemoved', onNodeRemoved.bind(this))
+    }
+    // this is async but doesn't need to be awaited
+    // this.zwave.connect()
   }
-  // this is async but doesn't need to be awaited
-  // this.zwave.connect()
 }
 
 // Implements the Payload for gauge, and registers/upgrade gauge
