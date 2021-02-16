@@ -1,5 +1,5 @@
 {
-  "name": "zj2m_prometheus",
+  "name": "zj2m-prom-exporter",
   "version": "0.1.0",
   "description": "A Prometheus exported for Zwavejs2mqtt",
   "main": "index.js",
