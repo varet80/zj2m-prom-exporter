@@ -1,5 +1,5 @@
 {
-  "name": "zj2m-prom-exporter",
+  "name": "@varet/zj2m-prom-exporter",
   "version": "0.1.0",
   "description": "A Prometheus exported for Zwavejs2mqtt",
   "main": "index.js",
@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/billiaz/zj2m-prom-exporter.git"
+  },
   "license": "ISC",
   "dependencies": {
     "fastify": "^3.12.0",
