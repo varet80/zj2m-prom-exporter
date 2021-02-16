@@ -1,6 +1,6 @@
 {
   "name": "@varet/zj2m-prom-exporter",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A Prometheus exported for Zwavejs2mqtt",
   "main": "index.js",
   "scripts": {

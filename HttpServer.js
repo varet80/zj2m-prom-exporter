@@ -6,7 +6,7 @@ const httpAddr = '0.0.0.0'
 const httpMetricPath = '/metrics'
 
 // Http Server to return metrics
-function HttpServer (customRegistry) {
+function HttpServer (customRegistry, logger) {
   // Declare a route
   fastify.get(httpMetricPath, async request => {
     logger.info(`Metrics query from ${request.ip}`)
