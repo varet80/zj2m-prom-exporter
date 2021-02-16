@@ -3,14 +3,6 @@ const { HttpServer } = require('./HttpServer')
 const logger = require('../../lib/logger.js').module('Prometheus')
 exports.logger = logger
 
-// Http Server settings
-const httpPort = 9001
-exports.httpPort = httpPort
-const httpAddr = '0.0.0.0'
-exports.httpAddr = httpAddr
-const httpMetricPath = '/metrics'
-exports.httpMetricPath = httpMetricPath
-
 let instance = null // the singleton instance
 
 /**
@@ -28,30 +20,32 @@ const gauge = new promCli.Gauge({
 /**
  * Function to initiate the Client (plugin)
  **/
-function PromClient (zwave) {
-  if (instance) {
-    instance.destroy()
-  }
-  this.zwave = zwave
-  if (!(this instanceof PromClient)) {
-    // start http server
-    HttpServer(customRegistry)
+class PromClient {
+  constructor (zwave) {
+    if (instance) {
+      instance.destroy()
+    }
+    this.zwave = zwave
+    if (!(this instanceof PromClient)) {
+      // start http server
+      HttpServer(customRegistry)
 
-    const d = new PromClient(zwave)
-    d.start()
+      const d = new PromClient(zwave)
+      d.start()
+    }
+
+    instance = this
   }
 
-  instance = this
-}
-
-PromClient.prototype.start = async function () {
-  logger.info('Event caller')
-  if (this.zwave) {
-    this.zwave.on('valueChanged', onValueChanged.bind(this))
-    this.zwave.on('nodeRemoved', onNodeRemoved.bind(this))
+  async start () {
+    logger.info('Event caller')
+    if (this.zwave) {
+      this.zwave.on('valueChanged', onValueChanged.bind(this))
+      this.zwave.on('nodeRemoved', onNodeRemoved.bind(this))
+    }
+    // this is async but doesn't need to be awaited
+    // this.zwave.connect()
   }
-  // this is async but doesn't need to be awaited
-  // this.zwave.connect()
 }
 
 // Implements the Payload for gauge, and registers/upgrade gauge
