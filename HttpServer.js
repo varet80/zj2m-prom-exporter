@@ -1,4 +1,3 @@
-const { logger } = require('./index')
 const fastify = require('fastify')()
 
 // Http Server settings

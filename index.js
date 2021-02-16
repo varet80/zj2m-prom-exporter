@@ -41,7 +41,7 @@ function PromClient (zwave) {
     instance.destroy()
   } else {
     // start http server
-    HttpServer(customRegistry)
+    HttpServer(customRegistry, logger)
   }
   
   instance = this
