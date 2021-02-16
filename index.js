@@ -7,6 +7,8 @@ const httpPort = 9001
 const httpAddr = '0.0.0.0'
 const httpMetricPath = '/metrics'
 
+let instance = null // the singleton instance
+
 /**
  * Registry and Gauge settings for Prometheus
  */
@@ -44,6 +46,9 @@ function HttpServer (customRegistry) {
  * Function to initiate the Client (plugin)
  **/
 function PromClient (zwave) {
+  if(instance) {
+    instance.destroy()
+  }
   this.zwave = zwave
   if (!(this instanceof PromClient)) {
 
@@ -53,6 +58,8 @@ function PromClient (zwave) {
     d = new PromClient(zwave)
     d.start()
  }
+  
+  instance = this
 
 }
 
