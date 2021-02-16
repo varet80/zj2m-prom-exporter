@@ -1,11 +1,15 @@
 const promCli = require('prom-client')
+const { HttpServer } = require('./HttpServer')
 const logger = require('../../lib/logger.js').module('Prometheus')
-const fastify = require('fastify')()
+exports.logger = logger
 
 // Http Server settings
 const httpPort = 9001
+exports.httpPort = httpPort
 const httpAddr = '0.0.0.0'
+exports.httpAddr = httpAddr
 const httpMetricPath = '/metrics'
+exports.httpMetricPath = httpMetricPath
 
 let instance = null // the singleton instance
 
@@ -20,26 +24,6 @@ const gauge = new promCli.Gauge({
   help: 'zwavejs2mqtt gauges from metrics',
   labelNames: ['nodeId', 'location', 'name', 'commandClass', 'property', 'propertyKey', 'label', 'type', 'endpoint', 'id']
 })
-
-// Http Server to return metrics
-function HttpServer (customRegistry) {
-  // Declare a route
-  fastify.get(httpMetricPath, async (request) => {
-    logger.info(`Metrics query from ${request.ip}`)
-    return customRegistry.metrics()
-  })
-
-  // Run the server!
-  const start = async () => {
-    try {
-      await fastify.listen(httpPort, httpAddr)
-    } catch (err) {
-      fastify.log.error(err)
-      process.exit(1)
-    }
-  }
-  start()
-}
 
 /**
  * Function to initiate the Client (plugin)
