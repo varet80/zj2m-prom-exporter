@@ -32,19 +32,22 @@ const gauge = new promCli.Gauge({
  * Function to initiate the Client (plugin)
  **/
 function PromClient (zwave) {
+  
+  if (!(this instanceof PromClient)) {
+    return new PromClient(zwave)
+  }
+
   if (instance) {
     instance.destroy()
-  }
-  this.zwave = zwave
-  if (!(this instanceof PromClient)) {
+  } else {
     // start http server
     HttpServer(customRegistry)
-
-    const d = new PromClient(zwave)
-    d.start()
   }
-
+  
   instance = this
+  this.zwave = zwave
+  
+  this.start()
 }
 
 PromClient.prototype.start = async function () {
