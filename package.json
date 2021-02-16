@@ -21,27 +21,25 @@
   },
   "license": "ISC",
   "dependencies": {
-    "eslint": "^7.19.0",
-    "eslint-config-standard": "^16.0.2",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^5.0.0",
     "fastify": "^3.12.0",
+    "npm-run-all": "^4.1.5",
     "prom-client": "^13.0.0"
   },
   "optionalDependencies": {
-    "eslint": "^7.19.0",
-    "eslint-config-standard": "^16.0.2",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-standard": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^5.0.0"
+    "eslint-plugin-promise": "^4.3.1"
   }
 }
