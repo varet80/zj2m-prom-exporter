@@ -53,7 +53,7 @@ function PromClient (zwave) {
     // start http server
     HttpServer(customRegistry)
 
-    d = new PromClient(zwave)
+    const d = new PromClient(zwave)
     d.start()
   }
 
@@ -89,6 +89,7 @@ function gaugePayload (payload) {
       if (payload.value) {
         metricValue = 1
       }
+      break
     default:
       return
   }
